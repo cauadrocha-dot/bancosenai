@@ -1,4 +1,6 @@
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,34 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Description = "API Gestão Financeira e Integração Clientes."
     });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Insira o token JWT desta maneira: Bearer {seu_token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header
+            },
+            new string[] {}
+        }
+    });
 });
 
 builder.Services.AddCors(options =>
@@ -24,6 +54,28 @@ builder.Services.AddCors(options =>
                         .AllowAnyMethod() // Permite os verbos GET, POST, PUT, DELETE [2]
                         .AllowAnyHeader()); // Permite o envio de JSON no corpo da mensagem [3]
 });
+
+var chaveBytes = Encoding.ASCII.GetBytes("ChaveSecretaSuperSecretaDoSenai2026!");
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = "Bearer";
+    options.DefaultChallengeScheme = "Bearer";
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true, // Agora validamos a assinatura real!
+        IssuerSigningKey = new SymmetricSecurityKey(chaveBytes),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true // Verifica se o token não expirou
+    };
+});
+
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -38,6 +90,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("PermitirTudo");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
