@@ -1,0 +1,98 @@
+﻿@model IEnumerable<FintechWEB.Models.Agencia>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h2>AGENCIAS</h2>
+<hr />
+<a href="/Agencia/Cadastrar">
+    <button type="button" class="btn btn-success">Novo</button>
+</a>
+<hr/>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>            
+            <th scope="col">Número</th>
+            <th scope="col">Cidade</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+       
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NumeroAgencia</td>
+                <td>@item.Cidade</td>
+                <td>@item.SiglaEstado</td>
+                <td>
+                    <a href="/Agencia/Editar/@item.NumeroAgencia" class="btn btn-primary btn-sm">
+                        Editar
+                    </a>
+                    <button type="button"
+                            class="btn btn-danger btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalConfirmacao"
+                            data-id="@item.NumeroAgencia">
+                        Excluir
+                    </button>
+                </td>
+
+            </tr>
+
+        }
+
+      
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="modalConfirmacao" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Deseja realmente apagar a agência número <strong id="numeroAgenciaModal"></strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Não</button>
+
+                <form id="formDeletar" action="" method="POST">
+                    <button type="submit" class="btn btn-primary">Sim</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Esse script roda no navegador para capturar qual linha foi clicada
+        // e atualizar o formulário do Modal com o ID correto antes de exibir.
+        const modalConfirmacao = document.getElementById('modalConfirmacao');
+        if (modalConfirmacao) {
+            modalConfirmacao.addEventListener('show.bs.modal', event => {
+                // Botão que disparou o evento
+                const botao = event.relatedTarget;
+
+                // Extrai o ID do atributo data-id="..."
+                const idAgencia = botao.getAttribute('data-id');
+
+                // Atualiza o texto do corpo do modal
+                const textoNumero = modalConfirmacao.querySelector('#numeroAgenciaModal');
+                textoNumero.textContent = idAgencia;
+
+                // Altera dinamicamente o 'action' do form para apontar para a rota certa do seu controller
+                const form = modalConfirmacao.querySelector('#formDeletar');
+                form.action = `/Agencia/Excluir/${idAgencia}`;
+            });
+        }
+    </script>
+}

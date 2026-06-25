@@ -1,0 +1,49 @@
+﻿@model FintechWEB.Models.Agencia
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<h4>Agencia</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="formAgencia" action="/Agencia/Cadastrar" method="POST">
+
+            <div id="validationSummary" class="text-danger mb-3" style="display: none;"></div>
+
+            <div class="mb-3">
+                <label id="lblNumeroAgencia" for="numeroAgencia" class="form-label">Número da Agência</label>
+                <input type="text" id="numeroAgencia" name="numeroAgencia" class="form-control" />
+                <span id="errorNumeroAgencia" class="text-danger small" style="display: none;"></span>
+            </div>
+
+            <div class="mb-3">
+                <label id="lblCidade" for="cidade" class="form-label">Cidade</label>
+                <input type="text" id="cidade" name="cidade" class="form-control" />
+                <span id="errorCidade" class="text-danger small" style="display: none;"></span>
+            </div>
+
+            <div class="mb-3">
+                <label id="lblSiglaEstado" for="siglaEstado" class="form-label">Sigla do Estado</label>
+                <input type="text" id="siglaEstado" name="siglaEstado" class="form-control" maxlength="2" />
+                <span id="errorSiglaEstado" class="text-danger small" style="display: none;"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

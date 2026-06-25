@@ -1,0 +1,51 @@
+﻿@model FintechWEB.Models.Agencia
+
+@{
+    ViewData["Title"] = "Editar Agência";
+}
+
+<h1>Editar</h1>
+
+<h4>Agência</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="formAgencia" action="/Agencia/Editar" method="POST">
+
+            <div id="validationSummary" class="text-danger mb-3" style="display: none;"></div>
+
+            <div class="mb-3">
+                <label id="lblNumeroAgencia" for="numeroAgencia" class="form-label">Número da Agência</label>
+                <input type="text" id="numeroAgencia" name="numeroAgencia" class="form-control" value="@Model?.NumeroAgencia" readonly />
+                <span id="errorNumeroAgencia" class="text-danger small" style="display: none;"></span>
+            </div>
+
+            <div class="mb-3">
+                <label id="lblCidade" for="cidade" class="form-label">Cidade</label>
+                <input type="text" id="cidade" name="cidade" class="form-control" value="@Model?.Cidade" />
+                <span id="errorCidade" class="text-danger small" style="display: none;"></span>
+            </div>
+
+            <div class="mb-3">
+                <label id="lblSiglaEstado" for="siglaEstado" class="form-label">Sigla do Estado</label>
+                <input type="text" id="siglaEstado" name="siglaEstado" class="form-control" maxlength="2" value="@Model?.SiglaEstado" />
+                <span id="errorSiglaEstado" class="text-danger small" style="display: none;"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
