@@ -36,13 +36,10 @@ builder.Services.AddSwaggerGen(c =>
                 Reference = new OpenApiReference
                 {
                     Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                },
-                Scheme = "oauth2",
-                Name = "Bearer",
-                In = ParameterLocation.Header
+                    Id = "Bearer" // Tem que ser idêntico ao nome definido acima
+                }
             },
-            new string[] {}
+            Array.Empty<string>()
         }
     });
 });

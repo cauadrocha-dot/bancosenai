@@ -13,7 +13,7 @@ namespace BancoSENAIAPI.Controllers
     {
         private static List<Usuario> _usuarios = new List<Usuario>
         {
-            new Usuario { Login = "reginaldo", Senha = "123", Perfil = "Admin" },
+            new Usuario { Login = "senai", Senha = "123", Perfil = "Admin" },
             new Usuario { Login = "gerente", Senha = "456", Perfil = "Gerente" },
             new Usuario { Login = "aluno", Senha = "789", Perfil = "User" }
         };
