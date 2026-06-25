@@ -1,0 +1,35 @@
+﻿IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'BancoSenaiDB')
+BEGIN
+    CREATE DATABASE BSDB;
+END
+GO
+
+USE BSDB;
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Agencia]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[Agencia] (
+        [NumeroAgencia] INT NOT NULL,
+        [Cidade]        VARCHAR(100) NOT NULL,
+        [SiglaEstado]   CHAR(2) NOT NULL,
+        
+        CONSTRAINT [PK_Agencia] PRIMARY KEY CLUSTERED ([NumeroAgencia] ASC)
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Agencia] WHERE [NumeroAgencia] = 1001)
+    INSERT INTO [dbo].[Agencia] ([NumeroAgencia], [Cidade], [SiglaEstado]) 
+    VALUES (1001, 'Aracaju', 'SE');
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Agencia] WHERE [NumeroAgencia] = 2002)
+    INSERT INTO [dbo].[Agencia] ([NumeroAgencia], [Cidade], [SiglaEstado]) 
+    VALUES (2002, 'São Paulo', 'SP');
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Agencia] WHERE [NumeroAgencia] = 3003)
+    INSERT INTO [dbo].[Agencia] ([NumeroAgencia], [Cidade], [SiglaEstado]) 
+    VALUES (3003, 'Salvador', 'BA');
+GO
+
+SELECT * FROM [dbo].[Agencia];
