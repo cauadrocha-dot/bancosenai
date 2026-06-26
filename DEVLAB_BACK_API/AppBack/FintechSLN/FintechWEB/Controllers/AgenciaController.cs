@@ -20,7 +20,7 @@ namespace FintechWEB.Controllers
 
         private async Task<string?> ObterTokenAsync()
         {
-            var dadosLogin = new { Login = "reginaldo", Senha = "123", Perfil = "Admin" };
+            var dadosLogin = new { Login = "senai", Senha = "123", Perfil = "Admin" };
 
 
             var response = await _httpClient.PostAsJsonAsync(UrlLoginSenai, dadosLogin);
