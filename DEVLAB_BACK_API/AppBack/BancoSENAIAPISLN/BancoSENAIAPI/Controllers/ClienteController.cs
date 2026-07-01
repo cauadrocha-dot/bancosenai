@@ -1,6 +1,6 @@
 ﻿using BancoSENAIAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-//using BancoSENAIAPI.Services;
+using BancoSENAIAPI.Services;
 
 namespace BancoSENAIAPI.Controllers
 {
@@ -29,7 +29,7 @@ namespace BancoSENAIAPI.Controllers
             // Remove todos os caracteres não numéricos do CPF
             string cpf = new string(novoCliente.Cpf.Where(char.IsDigit).ToArray());
 
-            //if (!FormService.ValidarCPF(cpf)) return BadRequest("O CPF do cliente é inválido.");
+            if (!FormService.ValidarCPF(cpf)) return BadRequest("O CPF do cliente é inválido.");
 
             novoCliente.Cpf = cpf;
             novoCliente.Codigo = _nextId++;
