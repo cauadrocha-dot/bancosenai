@@ -8,6 +8,8 @@ namespace BancoSENAIAPI.Controllers
     {
 
         private readonly string _caminhoRaiz = Path.Combine(Directory.GetCurrentDirectory(), "ClienteArquivos");
+        private static List<Models.DocumentoMetadados> _documentosMetadados = new List<Models.DocumentoMetadados>();
+        private static int _nextId = 1;
 
         [HttpPost("upload/{codigoCliente}")]
         public async Task<IActionResult> AnexarArquivo(int codigoCliente, IFormFile arquivo)
@@ -31,11 +33,48 @@ namespace BancoSENAIAPI.Controllers
                 await arquivo.CopyToAsync(stream);
             }
 
+            var documentoMetadados = new Models.DocumentoMetadados
+            {
+                Id = _nextId++,
+                Name = nomeOriginal,
+                Extensao = extensao,
+                Caminho = caminhoFinal,
+                CodigoCliente = codigoCliente
+            };
+
+            _documentosMetadados.Add(documentoMetadados);
+
             return Ok(new
             {
                 mensagem = "Documento anexado com sucesso!",
                 arquivoSalvo = novoNome
             });
+        }
+
+        [HttpGet("listar/{codigoCliente}")]
+        public IActionResult ListarDocumentos(int codigoCliente)
+        {
+            var documentos = _documentosMetadados.Where(d => d.CodigoCliente == codigoCliente).ToList();
+
+            if (!documentos.Any())
+                return NotFound(new { message = "Nenhum documento encontrado para este cliente." });
+
+            return Ok(documentos);
+        }
+
+        [HttpGet("download/{id}")]
+        public IActionResult DownloadDocumento(int id)
+        {
+            var documento = _documentosMetadados.FirstOrDefault(d => d.Id == id);
+
+            if (documento == null)
+                return NotFound(new { message = "Documento não encontrado." });
+
+            var caminhoArquivo = documento.Caminho;
+            var nomeArquivo = documento.Name + documento.Extensao;
+
+            var fileBytes = System.IO.File.ReadAllBytes(caminhoArquivo);
+            return File(fileBytes, "application/octet-stream", nomeArquivo);
         }
     }
 }
