@@ -36,7 +36,7 @@ namespace BancoSENAIAPI.Controllers
             var documentoMetadados = new Models.DocumentoMetadados
             {
                 Id = _nextId++,
-                Name = nomeOriginal,
+                Nome = nomeOriginal,
                 Extensao = extensao,
                 Caminho = caminhoFinal,
                 CodigoCliente = codigoCliente
@@ -71,7 +71,7 @@ namespace BancoSENAIAPI.Controllers
                 return NotFound(new { message = "Documento não encontrado." });
 
             var caminhoArquivo = documento.Caminho;
-            var nomeArquivo = documento.Name + documento.Extensao;
+            var nomeArquivo = documento.Nome + documento.Extensao;
 
             var fileBytes = System.IO.File.ReadAllBytes(caminhoArquivo);
             return File(fileBytes, "application/octet-stream", nomeArquivo);

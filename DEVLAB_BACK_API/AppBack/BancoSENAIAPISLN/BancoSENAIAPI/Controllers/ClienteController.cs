@@ -5,7 +5,7 @@ using BancoSENAIAPI.Services;
 namespace BancoSENAIAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class ClienteController : ControllerBase 
     {
         private static List<Models.Cliente> _clientes = new List<Models.Cliente>()
