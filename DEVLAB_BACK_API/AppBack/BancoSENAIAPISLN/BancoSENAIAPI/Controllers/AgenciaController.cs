@@ -7,11 +7,11 @@ namespace BancoSENAIAPI.Controllers
     [Route("api/v1/[controller]")]
     public class AgenciaController : ControllerBase
     {
-        private static List<Agencia> _agencias = new List<Agencia>
+        private static List<Models.Agencia> _agencias = new List<Models.Agencia>
         {
-            new Agencia { NumeroAgencia = 1001, Cidade = "Aracaju", SiglaEstado = "SE" },
-            new Agencia { NumeroAgencia = 2002, Cidade = "São Paulo", SiglaEstado = "SP" },
-            new Agencia { NumeroAgencia = 3003, Cidade = "Salvador", SiglaEstado = "BA" }
+            new Models.Agencia { NumeroAgencia = 1001, Cidade = "Aracaju", SiglaEstado = "SE" },
+            new Models.Agencia { NumeroAgencia = 2002, Cidade = "São Paulo", SiglaEstado = "SP" },
+            new Models.Agencia { NumeroAgencia = 3003, Cidade = "Salvador", SiglaEstado = "BA" }
         };
 
         [HttpGet]
@@ -21,7 +21,7 @@ namespace BancoSENAIAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Cadastrar([FromBody] Agencia novaAgencia)
+        public IActionResult Cadastrar([FromBody] Models.Agencia novaAgencia)
         {
             
             if (_agencias.Any(a => a.NumeroAgencia == novaAgencia.NumeroAgencia))
@@ -44,7 +44,7 @@ namespace BancoSENAIAPI.Controllers
         }
 
         [HttpPut("{codigo}")]
-        public IActionResult Alterar(int codigo, [FromBody] Agencia agenciaAtualizada)
+        public IActionResult Alterar(int codigo, [FromBody] Models.Agencia agenciaAtualizada)
         {
             var agenciaExistente = _agencias.FirstOrDefault(a => a.NumeroAgencia == codigo);
 
