@@ -67,7 +67,7 @@ namespace BancoSENAIAPI.Controllers
             }
             return Ok(documentos);
         }
-        [HttpGet("download/id")]
+        [HttpGet("download/{id}")]
         public IActionResult DownloadDocumentos(int id)
         {
             var documentos = _documentoMetadados
