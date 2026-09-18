@@ -1,13 +1,53 @@
-body {font-family: Arial, sans-serif; padding; 20px;}
-h1 {color:#003366;}
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1 {
+    color: #003366;
+}
+
 .form-container {
     margin-bottom: 30px;
     background: #f9f9f9;
     padding: 15px;
     border-radius: 5px;
 }
+
 input {
     padding: 8px;
     margin-right: 10px;
     border: 1px solid #ccc;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    button[onclick^="baixarDocumento"] {
+        background-color: #ffc107;
+    }
+
+    button[onclick^="excluirDocumento"] {
+        background-color: #dc3545;
+        color: white;
+    }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
 }
