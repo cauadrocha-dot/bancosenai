@@ -14,14 +14,13 @@ async function enviarDocumento() {
 
     const response = await fetch(`${URL_API}/upload/${codigoCliente}`, {
         method: "POST",
-        body: dadosArquivo
+        body: dadosArquivos
     });
     if (response.ok) {
         alert("Documento enviado com sucesso");
         document.getElementById("codigoCliente").value = "";
         document.getElementById("arquivo").value = "";
     } else {
-        const erro = await response.json();
-        alert("Erro: " + (erro.message || "falta ao enviar o documento"));
+        alert("Falha ao enviar o arquivo");
     }
 }
