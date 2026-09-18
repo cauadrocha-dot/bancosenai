@@ -1,4 +1,3 @@
-
 const URL_API = 'https://localhost:7081/api/v1/Documento';
 async function enviarDocumento() {
     const codigoCliente = document.getElementById("codigoCliente").value;
@@ -22,5 +21,42 @@ async function enviarDocumento() {
         document.getElementById("arquivo").value = "";
     } else {
         alert("Falha ao enviar o arquivo");
+    }
+}
+async function listarDocumentos() {
+
+    const codigoCliente = document.getElementById("codigoCliente").value;
+
+    if (!codigoCliente) {
+        alert("Informe o código do cliente");
+        return;
+    }
+
+    const response = await fetch(`${URL_API}/listar/${codigoCliente}`);
+
+    if (response.ok) {
+
+        const documentos = await response.json();
+        const corpoTabela = document.getElementById("corpoTabela");
+        corpoTabela.innerHTML = "";
+
+        documentos.forEach(documento => {
+
+            const linha = document.createElement("tr");
+
+            linha.innerHTML = `
+                <td>${documento.id}</td>
+                <td>${documento.name}</td>
+                <td>${documento.Extensao}</td>
+                <td>Ações</td>
+            `;
+
+            corpoTabela.appendChild(linha);
+        });
+
+    } else {
+
+        alert("Nenhum documento foi encontrado para este cliente");
+
     }
 }
