@@ -47,8 +47,12 @@ async function listarDocumentos() {
             linha.innerHTML = `
                 <td>${documento.id}</td>
                 <td>${documento.name}</td>
-                <td>${documento.Extensao}</td>
-                <td>Ações</td>
+                <td>${documento.extensao}</td>
+                <td>
+                <button onclick="baixarDocumento(${documento.id})">
+                Download
+                </button>
+                </td>
             `;
 
             corpoTabela.appendChild(linha);
@@ -57,6 +61,31 @@ async function listarDocumentos() {
     } else {
 
         alert("Nenhum documento foi encontrado para este cliente");
+
+    }
+}
+async function baixarDocumento(id) {
+
+    const response = await fetch(`${URL_API}/download/${id}`);
+
+    if (response.ok) {
+
+        const arquivo = await response.blob();
+
+        const url = window.URL.createObjectURL(arquivo);
+
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = `documento-${id}`;
+
+        link.click();
+
+        window.URL.revokeObjectURL(url);
+
+    } else {
+
+        alert("Não foi possível baixar o documento");
 
     }
 }
