@@ -10,7 +10,7 @@ namespace BancoSENAIAPI.Controllers
     public class AgenciaController : ControllerBase
     {
         private readonly AppDbContext _context;
-        private AgenciaController (AppDbContext context)
+        public  AgenciaController (AppDbContext context)
         {
           _context = context;
         }
