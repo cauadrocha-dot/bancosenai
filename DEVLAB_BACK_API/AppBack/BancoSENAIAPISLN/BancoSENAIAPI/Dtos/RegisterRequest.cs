@@ -11,3 +11,4 @@ namespace BancoSENAIAPI.Dtos
         public required string Senha { get; set; }
     }
 }
+
